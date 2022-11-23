@@ -154,9 +154,98 @@ Nyt eri koneille asennettu herra ja orja sekä ne ovat yhteydessä toisiinsa.
 
           </pre>
       </div>
-      <button class="collapsible">Empty</button>
+      <button class="collapsible">H4 Omat komennot</button>
       <div class="content">
-        <p></p>
+        <pre>
+a) Hei komento! Tee järjestelmään uusi "hei maailma" -komento ja asenna se orjille Saltilla. 
+Liitä raporttiisi orjan 'ls -l /usr/local/bin/' tulosteesta ainakin se rivi, jolla näkyy uuden 
+komentotiedostosi oikeudet.
+
+Käytössä kaksi ubuntu serveriä (versio 22.04.1 LTS). Toisella koneella on master ja toisella
+slave salt_test. Saltin versio kummassakin on 3004.1. Päivitetään paketit ja aletaan tekemään.
+    sudo apt update
+    sudo apt upgrade
+Mennään /srv/salt kansioon ja luodaan sinne uusi kansio shell.
+    cd /srv/salt
+    sudo mkdir shell
+Shell kansioon luodaan init.sls sekä haluamamme shellscript tiedosto ja kirjoitetaan kansioihin
+asiat mitä haluamme scriptin tekevän kun se ajetaan orjille saltilla.
+    cd shell
+    sudo nano init.sls 
+    <img src="kuvat/h4a1.png">
+    sudo nano shell.sh
+    <img src="kuvat/h4a2.png">
+Kokeillaan sheelscriptin toimiminen käsin.
+    chmod 755 shell.sh 
+    ./shell.sh 
+Ajetaan scripti saltilla orjalle.
+    sudo salt '*' state.apply shell
+Tarkistetaan toimiiko orjalla shellscript ja käydään katsomassa kansion oikeudet.
+    shell
+    cd /usr/local/bin
+    ls -l
+    <img src="kuvat/h4a4.png">
+
+b) whatsup.sh. Tee järjestelmään uusi komento, joka kertoo ajankohtaisia tietoja; asenna 
+se orjille. Vinkkejä: Voit näyttää valintasi mukaan esimerkiksi päivämäärää, säätä, tietoja 
+koneesta, verkon tilanteesta...
+
+Sama kuin kohdassa a), mutta luodaan kansio ja scripti nimellä whatsup. Kirjoitetaan scriptiin
+mitä tietoja halutaan nähdä.
+    <img src="kuvat/h4b1.png">
+    <img src="kuvat/h4b2.png">
+Ajetaan komento saltilla ja tarkistetaan tulos orjalla.
+    sudo salt '*' state.apply whatsup
+    whatsup
+    <img src="kuvat/h4b3.png">
+
+c) hello.py. Tee järjestelmään uusi komento Pythonilla ja asenna se orjille. Vinkkejä: Hei 
+maailma riittää, mutta propellihatut saavat toki koodaillakin. Shebang on "#!/usr/bin/python3".
+Helpoin Python-komento on: print("Hei Tero!")
+
+Mennään /srv/salt kansioon ja luodaan sinne uusi kansio shell.
+    cd /srv/salt
+    sudo mkdir tervepy
+    cd tervepy
+Luodaan kansioon init.sls ja python komento. Kirjoitetaan kansiohin seuraavasti.
+    <img src="kuvat/h4c3.png">  
+Ajetaan komento saltilla ja Tarkistetaan tulos orjalla.
+    sudo salt '*' state.apply tervepy
+    <img src="kuvat/h4c1.png">
+    tervepy
+    <img src="kuvat/h4c2.png">
+
+d) Laiskaa skriptailua. Tee kansio, josta jokainen skripti kopioituu orjille.
+
+Tehdään uusi kansio tervemaailma. tervemaailma kansioon init.sls sekä uusi kansio packages.
+    cd /srv/salt
+    sudo mkdir tervemaailma
+    cd tervemaailma
+    sudo nano init.sls
+    <img src="kuvat/h4d1.png">
+    sudo mkdir packages
+Kansioon packages tehdään tarvittavat scriptit
+    cd packages
+    sudo nano helloworld.sh 
+    sudo nano helloworld1.py 
+    <img src="kuvat/h4d2.png">
+Ajetaan kansio orjalle.
+    sudo salt '*' state.apply tervemaailma
+Näytti menneen läpi, mutta tarkistetaan orjalla tilanne.
+    <img src="kuvat/h4d3.png">  
+Kansiot ovat siirtyneet onnistuneesti orjalle.
+
+e) Intel. Etsi kolme loppuprojektia joltain vanhalta kurssitoteutukselta. Kuvaile projektit 
+tiiviisti, viittaa ja linkitä alkuperäiseeen raporttin. Tässä alakohdassa ei tarvitse vielä 
+kokeilla mitään koneella, vaan voit kuvailla niitä oheismateriaalin perusteella.
+
+---
+
+e) Lukua, ei luottamusta. Kokeile yhtä kohdassa d-Intel löytämääsi modulia koneella. Tämä 
+on infraa koodina, joten luottamusta ei tarvita. Voit lukea koodista, mitä olet ajamassa.
+
+--- 
+        </pre>
       </div>
       <button class="collapsible">Empty</button>
       <div class="content">
